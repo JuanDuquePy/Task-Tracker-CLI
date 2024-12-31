@@ -1,9 +1,16 @@
-{
-    "2": {
-        "title": "prueba",
-        "description": "prueba del json",
-        "status": "Done",
-        "createIn": "11-1-2021",
-        "updateAt": "12-2-2021"
+[
+    {
+        "id": 1,
+        "title": "Llamar al doctor",
+        "description": "Agendar cita m\u00e9dica",
+        "status": "todo",
+        "createIn": "31-12-2024"
+    },
+    {
+        "id": 2,
+        "title": "prueba2",
+        "description": "viva jesus",
+        "status": "done",
+        "createIn": "31-12-2024"
     }
-}
+]
