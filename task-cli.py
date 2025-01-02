@@ -20,16 +20,23 @@ parser.add_argument(
     type=str,
 )
 # Updating and deleting task
-parser.add_argument("-upd", "--update", help="Actualiza una tarea", type=str)
+parser.add_argument(
+    "-upd",
+    "--update",
+    help="Actualiza una tarea",
+    metavar=("title", "description", "satatus"),
+    nargs=3,
+    type=str,
+)
 parser.add_argument("-del", "--delete", help="Elimina una tarea", action="store_true")
 # Listing all task
 parser.add_argument("-l", "--list", help="Listar las tareas", action="store_true")
 # Listing task by status
-parser.add_argument("-ld", "--list-done", help="Listar las tareas done")
-parser.add_argument("-lt", "--list-todo", help="Listar las tareas todo")
-parser.add_argument("-lp", "--list-progress", help="Listar las tareas progress")
+parser.add_argument("-ld", "--listDone", help="Listar las tareas done")
+parser.add_argument("-lt", "--listTodo", help="Listar las tareas todo")
+parser.add_argument("-lp", "--listProgress", help="Listar las tareas progress")
 # Search
-parser.add_argument("-id", "--id", help="ID de la tarea", type=str)
+parser.add_argument("-id", "--id", help="ID de la tarea", type=int)
 
 
 def create_json(name: str):
@@ -57,7 +64,7 @@ def add(task):
         "description": description,
         "status": status,
         "createIn": datetime.datetime.now().strftime("%d-%m-%Y"),
-        # ? ¿Donde actualiza?  "updateAt": None,
+        "updateAt": None,
     }
     # Verificamos si la BD existe
     if not path.isfile("prueba.json"):
@@ -67,8 +74,6 @@ def add(task):
         # Cargar tareas existentes
         with open("prueba.json", "r") as database:
             existing_taks = json.load(database)
-            print(existing_taks)  # Muestra el contenido cargado
-            print(type(existing_taks))  # Muestra el tipo de datos
         # Todo: Corrergir: Validar que sea una lista (estructura esperada).
         # if not isinstance(existing_taks, (list, dict)):
         #   print("Error: La base de datos no tiene un formato válido.")
@@ -82,7 +87,7 @@ def add(task):
         with open("prueba.json", "w") as database:
             json.dump(existing_taks, database, indent=4)
 
-        # print(f"tarea '{title}' añadida con exito")
+        print(f"tarea '{title}' añadida con exito")
     except json.JSONDecodeError:
         print(
             "Error al leer la base de datos. verificar que el archivo json este en el formato adecuado"
@@ -91,17 +96,39 @@ def add(task):
         print(f"Ocurrio un error inesperado: {e}")
 
 
-def update():
-    pass
+def update(task_id: int, updates):
+    title, description, status = updates
+
+    with open("prueba.json", "r") as database:
+        leer = json.load(database)
+
+    for task in leer:
+        if task["id"] == int(task_id):
+            print(task["title"])
+            task["title"] = title
+            task["description"] = description
+            task["status"] = status
+            task["updateAt"] = datetime.datetime.now().strftime("%d-%m-%Y")
+            break
+        else:
+            print("No se encontro la tarea")
+
+    with open("prueba.json", "w") as file:
+        json.dump(leer, file, indent=4)
 
 
 def delete(id):
     with open("prueba.json", "r") as database:
         leer = json.load(database)
-    for i in leer:
-        p = i
-    if leer[id] == leer[p]:
-        del leer[id]
+    for i, diccionario in enumerate(leer, start=1):
+        id_diccionario = i
+        id_tarea = diccionario["id"]
+    if id_tarea == id:
+        borrar = id_diccionario - 1
+        leer.pop(borrar)
+        print(f"borramos la tarea con el id: {i}")
+    else:
+        print("la tarea no existe")
 
     with open("prueba.json", "w") as file:
         json.dump(leer, file, indent=4)
@@ -111,7 +138,35 @@ def list():
     with open("prueba.json", "r") as database:
         data = json.load(database)
     for i in data:
-        print(i)
+        print("-" * 10 + " TASK " + "-" * 10)
+        for a in i:
+            print(f"{a} : {i[a]}")
+
+
+def list_todo(todo):
+    with open("prueba.json", "r") as database:
+        data = json.load(database)
+
+    for i in data:
+        if i["status"] == todo:
+            print(i)
+
+
+def list_done(done):
+    with open("prueba.json", "r") as database:
+        data = json.load(database)
+
+    for i in data:
+        if i["status"] == done:
+            print(i)
+
+
+def list_progress(progress):
+    with open("prueba.json", "r") as database:
+        data = json.load(database)
+    for i in data:
+        if i["status"] == progress:
+            print(i)
 
 
 if __name__ == "__main__":
@@ -122,10 +177,16 @@ if __name__ == "__main__":
     elif args.add:
         add(args.add)
     elif args.update:
-        update()
+        update(args.id, args.update)
     elif args.delete:
         delete(args.id)
     elif args.list:
         list()
+    elif args.listDone:
+        list_done(args.listDone)
+    elif args.listTodo:
+        list_todo(args.listTodo)
+    elif args.listProgress:
+        list_progress(args.listProgress)
     else:
         print("The option does not exist if you need help: -h or --help")

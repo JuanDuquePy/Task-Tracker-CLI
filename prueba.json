@@ -1,10 +1,11 @@
 [
     {
         "id": 1,
-        "title": "Llamar al doctor",
-        "description": "Agendar cita m\u00e9dica",
-        "status": "todo",
-        "createIn": "31-12-2024"
+        "title": "Nueva tarea",
+        "description": "solo estoy probando ",
+        "status": "done",
+        "createIn": "31-12-2024",
+        "updateAt": "02-01-2025"
     },
     {
         "id": 2,
