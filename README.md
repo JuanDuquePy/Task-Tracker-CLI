@@ -72,4 +72,5 @@ python task.py -id <id task> -upd "title" "description" "status"
 
 ## Project
 
-[Task Tracker](https://github.com/JuanDuquePy/Task-Tracker-CLI)
+Project Task Tracker URL:
+https://github.com/JuanDuquePy/Task-Tracker-CLI
