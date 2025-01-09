@@ -62,13 +62,14 @@ python task.py -del -id <id task>
 
 Update task
 
-## Project
-
-[Task Tracker](https://github.com/JuanDuquePy/Task-Tracker-CLI)
-
 At the moment to update a task you must enter the three parameters
 (in the same order as shown in the example).
 
 ```bash
 python task.py -id <id task> -upd "title" "description" "status" 
 ```
+
+
+## Project
+
+[Task Tracker](https://github.com/JuanDuquePy/Task-Tracker-CLI)
