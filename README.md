@@ -4,6 +4,8 @@ Command line tool designed to manage and track tasks. tasks. Users will be able
 to add, update and delete tasks as well as view a list of these tasks a list of
 these tasks according to their status (all, done, progress).
 
+Solution [Task Tracker](https://github.com/JuanDuquePy/Task-Tracker-CLI) challenge [Roadmap.sh](https://roadmap.sh/projects/task-tracker)
+
 ## Python version
 
 It was built with Python version 3.12.3
@@ -73,4 +75,4 @@ python task.py -id <id task> -upd "title" "description" "status"
 ## Project
 
 Project Task Tracker URL:
-https://github.com/JuanDuquePy/Task-Tracker-CLI
+
